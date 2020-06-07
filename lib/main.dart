@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(Quizzer());
-}
+void main() => runApp(Quizzer());
 
 class Quizzer extends StatelessWidget {
   @override
@@ -34,6 +32,17 @@ class QuizAppPage extends StatefulWidget {
 }
 
 class _QuizAppPageState extends State<QuizAppPage> {
+  List<Icon> scorekeeper = [];
+
+  int questionIndex = 0;
+  List<String> questions = [
+    'Eminem is the fastest rapper as of the year 2020?',
+    'The best rapper in Nigeria is M.I Abaga?',
+    'The first woman to drive a car in Nigeria is Stella Obasanjo?',
+    'An oxen is a male cow?',
+    'The tallest building in the world is the Eiffel\'s tower?',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -46,7 +55,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
             padding: EdgeInsets.all(25.0),
             child: Center(
               child: Text(
-                'Here is where the question text goes, do you understand?',
+                questions.elementAt(questionIndex),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -68,7 +77,15 @@ class _QuizAppPageState extends State<QuizAppPage> {
                 ),
               ),
               color: Colors.green,
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  if (questionIndex < questions.length - 1) {
+                    questionIndex++;
+                  } else {
+                    questionIndex = 0;
+                  }
+                });
+              },
             ),
           ),
         ),
@@ -84,12 +101,23 @@ class _QuizAppPageState extends State<QuizAppPage> {
                 ),
               ),
               color: Colors.red,
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  if (questionIndex < questions.length - 1) {
+                    questionIndex++;
+                  } else {
+                    questionIndex = 0;
+                  }
+                });
+              },
             ),
           ),
         ),
-        Row(
-          children: <Widget>[],
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: <Widget>[],
+          ),
         ),
       ],
     );
