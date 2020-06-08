@@ -43,6 +43,8 @@ class _QuizAppPageState extends State<QuizAppPage> {
     'The tallest building in the world is the Eiffel\'s tower?',
   ];
 
+  List<bool> answers = [true, true, false, true, true];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -79,11 +81,22 @@ class _QuizAppPageState extends State<QuizAppPage> {
               color: Colors.green,
               onPressed: () {
                 setState(() {
-                  if (questionIndex < questions.length - 1) {
-                    questionIndex++;
+                  if (answers[questionIndex] == true) {
+                    print('User is correct');
+                    scorekeeper.add(
+                      Icon(Icons.check, color: Colors.green),
+                    );
                   } else {
-                    questionIndex = 0;
+                    print('User is wrong');
+                    scorekeeper.add(
+                      Icon(Icons.close, color: Colors.red),
+                    );
                   }
+
+                  if (questionIndex < questions.length - 1)
+                    questionIndex++;
+                  else
+                    questionIndex = 0;
                 });
               },
             ),
@@ -103,6 +116,18 @@ class _QuizAppPageState extends State<QuizAppPage> {
               color: Colors.red,
               onPressed: () {
                 setState(() {
+                  if (answers[questionIndex] == false) {
+                    print('User is correct');
+                    scorekeeper.add(
+                      Icon(Icons.check, color: Colors.green),
+                    );
+                  } else {
+                    scorekeeper.add(
+                      Icon(Icons.close, color: Colors.red),
+                    );
+                    print('User is wrong');
+                  }
+                  
                   if (questionIndex < questions.length - 1) {
                     questionIndex++;
                   } else {
@@ -116,7 +141,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
-            children: <Widget>[],
+            children: scorekeeper,
           ),
         ),
       ],
