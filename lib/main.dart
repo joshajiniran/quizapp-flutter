@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'question.dart';
+import 'quizbrain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 void main() => runApp(Quizzer());
 
@@ -39,14 +41,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
   int qIndex = 0;
 
   // a list of questions with their answers
-  List<Question> questions = [
-    Question(q: 'Eminem is the fastest rapper as of the year 2020?', a: true),
-    Question(q: 'The best rapper in Nigeria is M.I Abaga?', a: true),
-    Question(q: 'The first woman to drive a car in Nigeria is Stella Obasanjo??', a: false),
-    Question(q: 'An oxen is a male cow?', a: true),
-    Question(q: 'The tallest building in the world is the Eiffel\'s tower?', a: true),
-  ];
-
+  
   // List<String> questions = [
   //   'Eminem is the fastest rapper as of the year 2020?',
   //   'The best rapper in Nigeria is M.I Abaga?',
@@ -69,7 +64,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
             padding: EdgeInsets.all(25.0),
             child: Center(
               child: Text(
-                questions.elementAt(qIndex).questionText,
+                quizBrain.questions.elementAt(qIndex).questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -93,7 +88,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
               color: Colors.green,
               onPressed: () {
                 setState(() {
-                  if (questions[qIndex].questionAnswer == true) {
+                  if (quizBrain.questions[qIndex].questionAnswer == true) {
                     print('User is correct');
                     scorekeeper.add(
                       Icon(Icons.check, color: Colors.green),
@@ -105,7 +100,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
                     );
                   }
 
-                  if (qIndex < questions.length - 1)
+                  if (qIndex < quizBrain.questions.length - 1)
                     qIndex++;
                   else
                     qIndex = 0;
@@ -128,7 +123,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
               color: Colors.red,
               onPressed: () {
                 setState(() {
-                  if (questions[qIndex].questionAnswer == false) {
+                  if (quizBrain.questions[qIndex].questionAnswer == false) {
                     print('User is correct');
                     scorekeeper.add(
                       Icon(Icons.check, color: Colors.green),
@@ -140,7 +135,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
                     print('User is wrong');
                   }
 
-                  if (qIndex < questions.length - 1) {
+                  if (qIndex < quizBrain.questions.length - 1) {
                     qIndex++;
                   } else {
                     qIndex = 0;
