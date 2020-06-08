@@ -64,7 +64,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
             padding: EdgeInsets.all(25.0),
             child: Center(
               child: Text(
-                quizBrain.questions.elementAt(qIndex).questionText,
+                quizBrain.getQuestionText(qIndex),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -88,7 +88,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
               color: Colors.green,
               onPressed: () {
                 setState(() {
-                  if (quizBrain.questions[qIndex].questionAnswer == true) {
+                  if (quizBrain.getQuestionAnswer(qIndex) == true) {
                     print('User is correct');
                     scorekeeper.add(
                       Icon(Icons.check, color: Colors.green),
@@ -100,7 +100,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
                     );
                   }
 
-                  if (qIndex < quizBrain.questions.length - 1)
+                  if (qIndex < quizBrain.getQuestionLength() - 1)
                     qIndex++;
                   else
                     qIndex = 0;
@@ -123,7 +123,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
               color: Colors.red,
               onPressed: () {
                 setState(() {
-                  if (quizBrain.questions[qIndex].questionAnswer == false) {
+                  if (quizBrain.getQuestionAnswer(qIndex) == false) {
                     print('User is correct');
                     scorekeeper.add(
                       Icon(Icons.check, color: Colors.green),
@@ -135,7 +135,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
                     print('User is wrong');
                   }
 
-                  if (qIndex < quizBrain.questions.length - 1) {
+                  if (qIndex < quizBrain.getQuestionLength() - 1) {
                     qIndex++;
                   } else {
                     qIndex = 0;
