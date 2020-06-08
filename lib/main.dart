@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'question.dart';
+
 void main() => runApp(Quizzer());
 
 class Quizzer extends StatelessWidget {
@@ -34,16 +36,26 @@ class QuizAppPage extends StatefulWidget {
 class _QuizAppPageState extends State<QuizAppPage> {
   List<Icon> scorekeeper = [];
 
-  int questionIndex = 0;
-  List<String> questions = [
-    'Eminem is the fastest rapper as of the year 2020?',
-    'The best rapper in Nigeria is M.I Abaga?',
-    'The first woman to drive a car in Nigeria is Stella Obasanjo?',
-    'An oxen is a male cow?',
-    'The tallest building in the world is the Eiffel\'s tower?',
+  int qIndex = 0;
+
+  // a list of questions with their answers
+  List<Question> questions = [
+    Question(q: 'Eminem is the fastest rapper as of the year 2020?', a: true),
+    Question(q: 'The best rapper in Nigeria is M.I Abaga?', a: true),
+    Question(q: 'The first woman to drive a car in Nigeria is Stella Obasanjo??', a: false),
+    Question(q: 'An oxen is a male cow?', a: true),
+    Question(q: 'The tallest building in the world is the Eiffel\'s tower?', a: true),
   ];
 
-  List<bool> answers = [true, true, false, true, true];
+  // List<String> questions = [
+  //   'Eminem is the fastest rapper as of the year 2020?',
+  //   'The best rapper in Nigeria is M.I Abaga?',
+  //   'The first woman to drive a car in Nigeria is Stella Obasanjo?',
+  //   'An oxen is a male cow?',
+  //   'The tallest building in the world is the Eiffel\'s tower?',
+  // ];
+
+  // List<bool> answers = [true, true, false, true, true];
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +69,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
             padding: EdgeInsets.all(25.0),
             child: Center(
               child: Text(
-                questions.elementAt(questionIndex),
+                questions.elementAt(qIndex).questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -81,7 +93,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
               color: Colors.green,
               onPressed: () {
                 setState(() {
-                  if (answers[questionIndex] == true) {
+                  if (questions[qIndex].questionAnswer == true) {
                     print('User is correct');
                     scorekeeper.add(
                       Icon(Icons.check, color: Colors.green),
@@ -93,10 +105,10 @@ class _QuizAppPageState extends State<QuizAppPage> {
                     );
                   }
 
-                  if (questionIndex < questions.length - 1)
-                    questionIndex++;
+                  if (qIndex < questions.length - 1)
+                    qIndex++;
                   else
-                    questionIndex = 0;
+                    qIndex = 0;
                 });
               },
             ),
@@ -116,7 +128,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
               color: Colors.red,
               onPressed: () {
                 setState(() {
-                  if (answers[questionIndex] == false) {
+                  if (questions[qIndex].questionAnswer == false) {
                     print('User is correct');
                     scorekeeper.add(
                       Icon(Icons.check, color: Colors.green),
@@ -127,11 +139,11 @@ class _QuizAppPageState extends State<QuizAppPage> {
                     );
                     print('User is wrong');
                   }
-                  
-                  if (questionIndex < questions.length - 1) {
-                    questionIndex++;
+
+                  if (qIndex < questions.length - 1) {
+                    qIndex++;
                   } else {
-                    questionIndex = 0;
+                    qIndex = 0;
                   }
                 });
               },
