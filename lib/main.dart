@@ -37,6 +37,8 @@ class QuizAppPage extends StatefulWidget {
 }
 
 class _QuizAppPageState extends State<QuizAppPage> {
+  int correct = 0;
+  int wrong = 0;
   List<Icon> scorekeeper = [];
 
   void checkAnswer(bool userChoice) {
@@ -49,7 +51,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
             type: AlertType.info,
             title: "Quiz Completed",
             desc:
-                "You have completed the quiz, your result is being compiled and will be sent to you",
+                "You have completed the quiz, you got $correct right and missed $wrong",
             style: AlertStyle(
               animationType: AnimationType.fromTop,
               isCloseButton: false,
@@ -78,18 +80,17 @@ class _QuizAppPageState extends State<QuizAppPage> {
                 height: 50,
               )
             ]);
-
         alert.show();
         quizBrain.reset();
         scorekeeper.clear();
       } else {
         if (userChoice == correctAnswer) {
-          print('User is correct');
+          correct++;
           scorekeeper.add(
             Icon(Icons.check, color: Colors.green),
           );
         } else {
-          print('User is wrong');
+          wrong++;
           scorekeeper.add(
             Icon(Icons.close, color: Colors.red),
           );

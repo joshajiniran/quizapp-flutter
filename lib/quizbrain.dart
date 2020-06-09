@@ -46,19 +46,14 @@ class QuizBrain {
   }
 
   void nextQuestion() {
-    if (_qIndex < _questions.length - 1) {
-      _qIndex++;
-    }
+    if (_qIndex < _questions.length - 1) _qIndex++;
   }
 
   bool isFinished() {
-    if (_qIndex == _questions.length - 1) {
-      print('True');
+    if (_qIndex == _questions.length - 1)
       return true;
-    } else {
-      print('False');
+    else
       return false;
-    }
   }
 
   void reset() {
