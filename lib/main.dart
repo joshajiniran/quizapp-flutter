@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'quizbrain.dart';
 
@@ -42,18 +43,59 @@ class _QuizAppPageState extends State<QuizAppPage> {
     bool correctAnswer = quizBrain.getQuestionAnswer();
 
     setState(() {
-      if (userChoice == correctAnswer) {
-        print('User is correct');
-        scorekeeper.add(
-          Icon(Icons.check, color: Colors.green),
-        );
+      if (quizBrain.isFinished() == true) {
+        var alert = Alert(
+            context: context,
+            type: AlertType.info,
+            title: "Quiz Completed",
+            desc:
+                "You have completed the quiz, your result is being compiled and will be sent to you",
+            style: AlertStyle(
+              animationType: AnimationType.fromTop,
+              isCloseButton: false,
+              isOverlayTapDismiss: false,
+              descStyle: TextStyle(fontWeight: FontWeight.bold),
+              animationDuration: Duration(milliseconds: 400),
+              alertBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+                side: BorderSide(
+                  color: Colors.grey,
+                ),
+              ),
+              titleStyle: TextStyle(color: Colors.red),
+            ),
+            buttons: [
+              DialogButton(
+                child: Text(
+                  'Close',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+                onPressed: () => Navigator.pop(context),
+                width: 150,
+                height: 50,
+              )
+            ]);
+
+        alert.show();
+        quizBrain.reset();
+        scorekeeper.clear();
       } else {
-        print('User is wrong');
-        scorekeeper.add(
-          Icon(Icons.close, color: Colors.red),
-        );
+        if (userChoice == correctAnswer) {
+          print('User is correct');
+          scorekeeper.add(
+            Icon(Icons.check, color: Colors.green),
+          );
+        } else {
+          print('User is wrong');
+          scorekeeper.add(
+            Icon(Icons.close, color: Colors.red),
+          );
+        }
+        quizBrain.nextQuestion();
       }
-      quizBrain.nextQuestion();
     });
   }
 
