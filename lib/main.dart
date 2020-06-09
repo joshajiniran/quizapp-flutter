@@ -38,19 +38,24 @@ class QuizAppPage extends StatefulWidget {
 class _QuizAppPageState extends State<QuizAppPage> {
   List<Icon> scorekeeper = [];
 
-  int qIndex = 0;
+  void checkAnswer(bool userChoice) {
+    bool correctAnswer = quizBrain.getQuestionAnswer();
 
-  // a list of questions with their answers
-  
-  // List<String> questions = [
-  //   'Eminem is the fastest rapper as of the year 2020?',
-  //   'The best rapper in Nigeria is M.I Abaga?',
-  //   'The first woman to drive a car in Nigeria is Stella Obasanjo?',
-  //   'An oxen is a male cow?',
-  //   'The tallest building in the world is the Eiffel\'s tower?',
-  // ];
-
-  // List<bool> answers = [true, true, false, true, true];
+    setState(() {
+      if (userChoice == correctAnswer) {
+        print('User is correct');
+        scorekeeper.add(
+          Icon(Icons.check, color: Colors.green),
+        );
+      } else {
+        print('User is wrong');
+        scorekeeper.add(
+          Icon(Icons.close, color: Colors.red),
+        );
+      }
+      quizBrain.nextQuestion();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +69,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
             padding: EdgeInsets.all(25.0),
             child: Center(
               child: Text(
-                quizBrain.getQuestionText(qIndex),
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -86,26 +91,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
                 ),
               ),
               color: Colors.green,
-              onPressed: () {
-                setState(() {
-                  if (quizBrain.getQuestionAnswer(qIndex) == true) {
-                    print('User is correct');
-                    scorekeeper.add(
-                      Icon(Icons.check, color: Colors.green),
-                    );
-                  } else {
-                    print('User is wrong');
-                    scorekeeper.add(
-                      Icon(Icons.close, color: Colors.red),
-                    );
-                  }
-
-                  if (qIndex < quizBrain.getQuestionLength() - 1)
-                    qIndex++;
-                  else
-                    qIndex = 0;
-                });
-              },
+              onPressed: () => checkAnswer(true),
             ),
           ),
         ),
@@ -121,27 +107,7 @@ class _QuizAppPageState extends State<QuizAppPage> {
                 ),
               ),
               color: Colors.red,
-              onPressed: () {
-                setState(() {
-                  if (quizBrain.getQuestionAnswer(qIndex) == false) {
-                    print('User is correct');
-                    scorekeeper.add(
-                      Icon(Icons.check, color: Colors.green),
-                    );
-                  } else {
-                    scorekeeper.add(
-                      Icon(Icons.close, color: Colors.red),
-                    );
-                    print('User is wrong');
-                  }
-
-                  if (qIndex < quizBrain.getQuestionLength() - 1) {
-                    qIndex++;
-                  } else {
-                    qIndex = 0;
-                  }
-                });
-              },
+              onPressed: () => checkAnswer(false),
             ),
           ),
         ),
