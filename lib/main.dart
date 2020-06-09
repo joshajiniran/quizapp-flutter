@@ -82,6 +82,8 @@ class _QuizAppPageState extends State<QuizAppPage> {
             ]);
         alert.show();
         quizBrain.reset();
+        wrong = 0;
+        correct = 0;
         scorekeeper.clear();
       } else {
         if (userChoice == correctAnswer) {
